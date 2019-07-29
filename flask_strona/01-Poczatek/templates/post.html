@@ -1,0 +1,18 @@
+﻿{% extends "base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content_title %}{{ post.title }}{% endblock %}
+
+{% block extra_header %}
+    {% if session.logged_in %}
+        <li><a class="nav-item nav-link" href="{{ url_for('edit', slug=post.slug) }}">Edytuj wpis</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<h2 class="article-title">{{ post.title }}</h2>
+<p class="article-content">{{ post.body|safe }}</p>
+<p>Zapisano {{ post.date_posted.strftime('%d/%m/%Y') }}</p>
+
+{% endblock %}
