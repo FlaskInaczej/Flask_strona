@@ -1,0 +1,22 @@
+﻿{% extends "base.html" %}
+{% block content %}
+    {% for post in posts.items %}
+    <article class="media content-section">
+        <div class="media-body">
+        <h2><a class="article-title" href="{{ url_for('article', slug=post.slug)  }}">{{ post.title }}</a></h2>
+             <p class="article-content">{{ post.body[:360]|safe }}</p>
+        </div>
+    </article>
+     {% endfor %}
+    <div class="row">
+    <div class="offset-md-2 col-md-8 pt-5">
+        {% if posts.has_prev %}
+        <a href="{{ url_for('home', page=posts.prev_num) }}"> &lt; &lt; Nowsze wpisy</a>
+        {% endif %}
+        {% if posts.has_next %}
+        <a href="{{ url_for('home', page=posts.next_num) }}"> Starsze wpisy &gt; &gt;</a>
+        {% endif %}
+    </div>
+   </div>
+   
+{% endblock content %}
