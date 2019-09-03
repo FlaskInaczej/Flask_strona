@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+   
+   <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet"> 
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css')}}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    {% if title %}
+    <title>Inaczej o Flasku - {{ title }}</title>
+    {% else %}
+    <title>Inaczej o Flasku </title>
+    {% endif %}
+</head>
+<body>
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4" href='/'>Flask dla Potłuczonych </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        {% if session.logged_in %}
+                        <a class="nav-item nav-link" href="{{ url_for('drafts') }}">Szkice</a>
+                        <a class="nav-item nav-link" href="{{ url_for('nowy_post') }}">Nowy Post</a>
+                        <a class="nav-item nav-link" href="{{ url_for('logout') }}">Wyloguj</a>
+                        {% endif %}
+                        {% block extra_header %}{% endblock %}
+                    </div>
+                    </div>
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="https://github.com/FlaskInaczej/Flask_strona/tree/master"><i class="fab fa-github fa-2x" style="color:white"></i></a>
+                        <a class="nav-item nav-link" href="{{ url_for('contact') }}"><i class="fas fa-at fa-2x" style="color:white"></i></a>
+                        <a class="nav-item nav-link" href="{{ url_for('atom') }}"><i class="fas fa-rss-square fa-2x" style="color:white"></i></a>
+                       
+                        
+                    
+                {% block search_bar %}
+                     <form action="{{ url_for ('home') }}" class="form-inline my-2 my-lg-0" id='search-form' method="get" role="search">
+                    <input class="form-control mr-sm-2" name="q" placeholder="szukaj na stronie" type="search" values="{% if search %}{{ search }}{% endif %}" /> 
+                    </form>
+                {% endblock %}
+                </div>
+            </div>
+        </nav>
+  
+    <main role="main" class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                {% block content %}{% endblock %}
+            </div>
+            
+        </div>
+    </main>
+    
+    <footer id="footer" class="text-muted text-center">
+    <div class="containter  mb-4 p-4">
+    &copy; 2019 Flask Inaczej
+    </div>
+    </footer>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+    <script src="https://kit.fontawesome.com/12b382a1c1.js"></script>
+    <!-- include summernote css/js -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/lang/summernote-pl-PL.js"></script>
+    <script>
+        $('#summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear','strikethrough', 'superscript', 'subscript']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture', 'video', 'hr']],
+                ['misc', ['fullscreen', 'undo', 'redo']],
+            ],
+            tabsize: 2,
+            height: 180,
+            lang: 'pl-PL'
+        });
+    </script>
+</body>
+</html>

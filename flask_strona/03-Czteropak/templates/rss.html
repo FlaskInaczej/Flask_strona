@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h2 class="article-title">Powiadomienia RSS</h2>
+<p class="article-content">Aby być zawsze na bieżąco z nowymi postami z tego bloga,  dodaj poniższy link do swojego czytnika RSS</p>
+<a href="{{ url_for('feeds') }}">Powiadomienia RSS</a>
+
+{% endblock %}
